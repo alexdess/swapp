@@ -316,7 +316,7 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(
               decoration: TextDecoration.underline,
             ),
-            recognizer: new TapGestureRecognizer()..onTap = () => widget.auth.sendEmailVerification(),
+            recognizer: new TapGestureRecognizer()..onTap = () => _sendVerificationEmail(),
         ),
         ],
     ),
@@ -328,5 +328,9 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _isEmailVerified = value;
     });
+  }
+
+  _sendVerificationEmail() async {
+    await widget.auth.sendEmailVerification();
   }
 }
