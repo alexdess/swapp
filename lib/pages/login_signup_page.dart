@@ -1,8 +1,8 @@
 
+import 'package:Swapp/services/authentification.dart';
+import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hold_app/services/authentification.dart';
-import 'package:hold_app/widget/ReusableAppBar.dart';
 
 class LoginSignupPage extends StatefulWidget {
   LoginSignupPage({this.auth, this.loginCallback,this.firestore});
@@ -50,7 +50,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     _width = MediaQuery.of(context).size.width;
     _height = MediaQuery.of(context).size.height;
     return new Scaffold(
-        appBar: MyAppBar().setAppBar(context, 'AppYourService'),
+        appBar: MyAppBar().setAppBar(context, "Sw'app"),
         body: Stack(
           children: <Widget>[
             _showForm(),
@@ -169,7 +169,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                         ),
                     ),
                     Expanded(
-                      child: Text('AppYourService est une application solidaire qui met en relation les demandeurs de services avec ceux qui peuvent y répondre.'),
+                      child: Text('Swa\'App est une application solidaire qui met en relation les demandeurs de services avec ceux qui peuvent y répondre.'),
                     ),
                     SizedBox(width: 50),
                   ],

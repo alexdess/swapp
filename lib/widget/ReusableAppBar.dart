@@ -1,5 +1,5 @@
+import 'package:Swapp/pages/global_infos.dart';
 import 'package:flutter/material.dart';
-import 'package:hold_app/pages/global_infos.dart';
 class MyAppBar {
   setAppBar(context, String title) {
     return new AppBar(

@@ -1,6 +1,6 @@
+import 'package:Swapp/services/authentification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hold_app/services/authentification.dart';
 
 class ProfilePage extends StatefulWidget {
   final Firestore firestore = new Firestore();

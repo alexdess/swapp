@@ -1,10 +1,10 @@
+import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:hold_app/widget/ReusableAppBar.dart';
 class InfosGeneral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar().setAppBar(context, 'AppYourService'),
+      appBar: MyAppBar().setAppBar(context, "Sw'app"),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) =>
             EntryItem(data[index]),

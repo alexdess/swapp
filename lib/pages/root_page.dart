@@ -1,8 +1,7 @@
+import 'package:Swapp/services/authentification.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hold_app/services/authentification.dart';
-
-import 'bottom_navigation_three_screens/container_page.dart';
+import 'filter_page.dart';
 import 'login_signup_page.dart';
 
 enum AuthStatus {
@@ -102,7 +101,7 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        child: MyContainerPage(firestore,logoutCallback),
+        child: FilterPage(firestore,logoutCallback),
         ),
     );
   }
