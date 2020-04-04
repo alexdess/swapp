@@ -1,9 +1,11 @@
+import 'package:Swapp/models/VideoFilter.dart';
 import 'package:Swapp/pages/call_page.dart';
 import 'package:Swapp/services/authentification.dart';
 import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../services/get_video_channel_service.dart';
 
 import 'VideoPage2.dart';
 
@@ -31,6 +33,7 @@ class _FilterPageState extends State<FilterPage> {
 
   @override
   void initState() {
+    GetVideoChannelService.ClearId(widget.auth.getCurrentUserId());
     _isRandomSelected = true;
     _isDiscussion = false;
     _isEntertainement = false;
@@ -187,11 +190,27 @@ class _FilterPageState extends State<FilterPage> {
     // service: get channel from filter...
     // search on all searching list... if nothing => add entry....
     await _handleCameraAndMic();
+    VideoFilter filter;
+    if(_isRandomSelected){
+      filter = new VideoFilter('',widget.auth.getCurrentUserId(),true,true,true,true,true,'');
+    }
+    else {
+      filter = new VideoFilter(
+          '',
+          widget.auth.getCurrentUserId(),
+          _isDiscussion,
+          _isEntertainement,
+          _isCultural,
+          _isParty,
+          _isLanguageTraining,
+          '');
+    }
+    var channel = await GetVideoChannelService.GetChannelId(filter);
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                CallPage(appId: APP_ID, channelName: "onlyOneChannel")));
+                CallPage(appId: APP_ID, channelName: channel)));
   }
 
   Future<void> _handleCameraAndMic() async {
@@ -270,11 +289,10 @@ class _FilterPageState extends State<FilterPage> {
   _changeArea() {
     showDialog(
       context: context,
-
       builder: (BuildContext context) => Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
         child: TextFormField(
           maxLines: 1,
           keyboardType: TextInputType.text,
@@ -294,42 +312,41 @@ class _FilterPageState extends State<FilterPage> {
   _changeAgeRange() {
     showDialog(
       context: context,
-
       builder: (BuildContext context) => Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
         child: Container(
           height: 150,
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: <Widget>[
-            TextFormField(
-              maxLines: 1,
-              keyboardType: TextInputType.text,
-              autofocus: false,
-              decoration: new InputDecoration(
-                  hintText: '18 years old',
-                  icon: new Icon(
-                    Icons.map,
-                    color: Colors.grey,
-                  )),
-              onSaved: (value) => _minAge = value.trim(),
-            ),
-            TextFormField(
-              maxLines: 1,
-              keyboardType: TextInputType.text,
-              autofocus: false,
-              decoration: new InputDecoration(
-                  hintText: '30 years old',
-                  icon: new Icon(
-                    Icons.map,
-                    color: Colors.grey,
-                  )),
-              onSaved: (value) => _maxAge = value.trim(),
-            ),
-          ],
-        ),
+          child: ListView(
+            padding: const EdgeInsets.all(20),
+            children: <Widget>[
+              TextFormField(
+                maxLines: 1,
+                keyboardType: TextInputType.text,
+                autofocus: false,
+                decoration: new InputDecoration(
+                    hintText: '18 years old',
+                    icon: new Icon(
+                      Icons.map,
+                      color: Colors.grey,
+                    )),
+                onSaved: (value) => _minAge = value.trim(),
+              ),
+              TextFormField(
+                maxLines: 1,
+                keyboardType: TextInputType.text,
+                autofocus: false,
+                decoration: new InputDecoration(
+                    hintText: '30 years old',
+                    icon: new Icon(
+                      Icons.map,
+                      color: Colors.grey,
+                    )),
+                onSaved: (value) => _maxAge = value.trim(),
+              ),
+            ],
+          ),
         ),
       ),
     );
