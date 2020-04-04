@@ -216,14 +216,13 @@ class _CallPageState extends State<CallPage> {
             //onPressed: () => _showChatOverlay(),
             child: Icon(
               Icons.chat,
-              color: Colors.white,
-              size: 35.0,
+              color: Colors.lightBlue,
+              size: 20.0,
             ),
-
             shape: CircleBorder(),
             elevation: 2.0,
-            fillColor: Colors.redAccent,
-            padding: const EdgeInsets.all(15.0),
+            fillColor: Colors.white,
+            padding: const EdgeInsets.all(12.0),
           ),
 
           RawMaterialButton(
@@ -312,7 +311,7 @@ class _CallPageState extends State<CallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agora Flutter QuickStart'),
+        title: Text('Video in progress'),
       ),
       backgroundColor: Colors.black,
       body: Center(

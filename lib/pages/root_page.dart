@@ -81,6 +81,7 @@ class _RootPageState extends State<RootPage> {
   }
 
   void logoutCallback() {
+    widget.auth.signOut();
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
       _userId = "";

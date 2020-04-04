@@ -1,3 +1,4 @@
+import 'package:Swapp/pages/root_page.dart';
 import 'package:Swapp/services/authentification.dart';
 import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -286,5 +287,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _disconnectUser() {
     widget.logoutCallback();
+    Navigator.pop(context);
   }
 }
