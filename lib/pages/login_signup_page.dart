@@ -83,8 +83,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
           print('Signed in: $userId');
-        } else {
+        }
+        else {
           userId = await widget.auth.signUp(_email, _password);
+          widget.auth.sendEmailVerification();
           if(userId != null && userId.isNotEmpty){
 
           firestore.collection(userId).document("Infos").setData(<String, dynamic>{

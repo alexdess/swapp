@@ -2,6 +2,7 @@ import 'package:Swapp/pages/root_page.dart';
 import 'package:Swapp/services/authentification.dart';
 import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -24,11 +25,16 @@ class _ProfilePageState extends State<ProfilePage> {
   String _village;
   String _postalCode;
 
+  bool _isEmailVerified;
+
+
   @override
   void initState() {
     super.initState();
     _setInfos();
     _errorMessage = "";
+    _isEmailVerified = true;
+    widget.auth.isEmailVerified().then((value) => _changeEmailVerified(value));
   }
 
   void _setInfos() async {
@@ -60,6 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: <Widget>[
+            _showEmailValidation(),
             showNameInput(),
             showEmailInput(),
             showAdresseInput(),
@@ -288,5 +295,38 @@ class _ProfilePageState extends State<ProfilePage> {
   void _disconnectUser() {
     widget.logoutCallback();
     Navigator.pop(context);
+  }
+
+  Widget _showEmailValidation() {
+    if(_isEmailVerified){
+      return Container(width: 0,height: 0);
+    }
+    else{
+      return RichText(
+
+        text: TextSpan(
+          text: 'Your email is currenctly not verified, please check your emails.',
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+            children: <TextSpan>[
+        new TextSpan(
+            text: ' Send a new verification email.',
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: new TapGestureRecognizer()..onTap = () => widget.auth.sendEmailVerification(),
+        ),
+        ],
+    ),
+        );
+    }
+  }
+
+  _changeEmailVerified(bool value) {
+    setState(() {
+      _isEmailVerified = value;
+    });
   }
 }
