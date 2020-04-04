@@ -171,7 +171,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                         ),
                     ),
                     Expanded(
-                      child: Text('Swa\'App est une application solidaire qui met en relation les demandeurs de services avec ceux qui peuvent y répondre.'),
+                      child: Text('Swa\'App est une application solidaire qui met en relation des personnes voulant faire de nouvelles rencontres selons des critères.'),
                     ),
                     SizedBox(width: 50),
                   ],
@@ -203,7 +203,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                       ),
                     ),
                     Expanded(
-                      child: Text('Les requêtes sont géré selon la géolocalisation des utilisateurs.'),
+                      child: Text('Les videos "match" sont gérées selon la géolocalisation des utilisateurs.'),
                     ),
                     SizedBox(width: 50),
                   ],
@@ -213,7 +213,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                   children: <Widget>[
                     SizedBox(width: 50),
                     Expanded(
-                      child: Text('AppYourService est une application solidaire qui met en relation les demandeurs de services avec ceux qui peuvent y répondre.'),
+                      child: Text('Swa\'pp est une application solidaire qui met en relation les gens qui s\'ennuient.'),
                     ),
                     Expanded(
                       child: CircleAvatar(

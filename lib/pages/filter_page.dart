@@ -25,6 +25,9 @@ class _FilterPageState extends State<FilterPage> {
   bool _isLanguageTraining;
   bool _isCultural;
   bool _isParty;
+  String _areaKm;
+  String _minAge;
+  String _maxAge;
 
   @override
   void initState() {
@@ -41,8 +44,8 @@ class _FilterPageState extends State<FilterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar().setAppBar(context, "Sw'app",
-      loginCallBack: widget.logoutCallback),
+      appBar: MyAppBar()
+          .setAppBar(context, "Sw'app", loginCallBack: widget.logoutCallback),
       body: ListView(
         padding: const EdgeInsets.all(10),
         children: <Widget>[
@@ -60,14 +63,20 @@ class _FilterPageState extends State<FilterPage> {
           FilterChip(
             selectedColor: Colors.blue,
             selected: _isRandomSelected,
-            label: Text('Random',
-                style: TextStyle(
-                fontSize: 20
+            label: Text(
+              'Fully Random',
+              style: TextStyle(fontSize: 25),
             ),
-          ),
             onSelected: (bool value) {
               setState(() {
                 _isRandomSelected = !_isRandomSelected;
+                if (value) {
+                  _isLanguageTraining = false;
+                  _isParty = false;
+                  _isCultural = false;
+                  _isEntertainement = false;
+                  _isDiscussion = false;
+                }
               });
             },
           ),
@@ -77,6 +86,7 @@ class _FilterPageState extends State<FilterPage> {
             onChanged: (bool value) {
               setState(() {
                 _isDiscussion = !_isDiscussion;
+                _isRandomSelected = value ? false : _isRandomSelected;
               });
             },
           ),
@@ -86,6 +96,7 @@ class _FilterPageState extends State<FilterPage> {
             onChanged: (bool value) {
               setState(() {
                 _isEntertainement = !_isEntertainement;
+                _isRandomSelected = value ? false : _isRandomSelected;
               });
             },
           ),
@@ -95,6 +106,7 @@ class _FilterPageState extends State<FilterPage> {
             onChanged: (bool value) {
               setState(() {
                 _isCultural = !_isCultural;
+                _isRandomSelected = value ? false : _isRandomSelected;
               });
             },
           ),
@@ -104,15 +116,19 @@ class _FilterPageState extends State<FilterPage> {
             onChanged: (bool value) {
               setState(() {
                 _isParty = !_isParty;
+                _isRandomSelected = value ? false : _isRandomSelected;
               });
             },
           ),
           new CheckboxListTile(
-            title: Text("Language training",),
+            title: Text(
+              "Language training",
+            ),
             value: _isLanguageTraining,
             onChanged: (bool value) {
               setState(() {
                 _isLanguageTraining = !_isLanguageTraining;
+                _isRandomSelected = value ? false : _isRandomSelected;
               });
             },
           ),
@@ -124,9 +140,9 @@ class _FilterPageState extends State<FilterPage> {
             ),
           ),
           Container(height: 10),
-          _filterRow('Area','20 km'),
+          _filterRow('Area', '20 km', _changeArea),
           Container(height: 10),
-          _filterRow('Age','25 ans'),
+          _filterRow('Age', '25 ans', _changeAgeRange),
           showPrimaryButton(),
           showErrorMessage(),
         ],
@@ -202,45 +218,120 @@ class _FilterPageState extends State<FilterPage> {
     );
   }
 
-  Widget _filterRow(String s, String s2) {
+  Widget _filterRow(String filterName, String value, Function onClick) {
     return Row(
       children: <Widget>[
         Container(
           width: 100,
-          child: Text(s,
+          child: Text(
+            filterName,
             style: TextStyle(
               fontSize: 20,
             ),
           ),
         ),
-        Container(
-          width: 100,
-          decoration: const BoxDecoration(
-            border: Border(
-              top: BorderSide(width: 1.0, color: Color(0xFFFFFFFFFF)),
-              left: BorderSide(width: 1.0, color: Color(0xFFFFFFFFFF)),
-              right: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
-              bottom: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
-            ),
-          ),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(width: 1.0, color: Color(0xFFFFDFDFDF)),
-                left: BorderSide(width: 1.0, color: Color(0xFFFFDFDFDF)),
-                right: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
-                bottom: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+        GestureDetector(
+            onTap: () {
+              onClick();
+            },
+            child: Container(
+              width: 100,
+              height: 35,
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+                  left: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+                  right: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+                  bottom: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+                ),
               ),
-            ),
-            child: Text(
-                s2,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Color(0xFF000000))
-            ),
-          ),
-        )
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+                    left: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+                    right: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+                    bottom: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+                  ),
+                ),
+                child: Center(
+                  child: Text(value,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Color(0xFF000000))),
+                ),
+              ),
+            )),
       ],
+    );
+  }
+
+  _changeArea() {
+    showDialog(
+      context: context,
+
+      builder: (BuildContext context) => Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+        child: TextFormField(
+          maxLines: 1,
+          keyboardType: TextInputType.text,
+          autofocus: false,
+          decoration: new InputDecoration(
+              hintText: '20 Km',
+              icon: new Icon(
+                Icons.map,
+                color: Colors.grey,
+              )),
+          onSaved: (value) => _areaKm = value.trim(),
+        ),
+      ),
+    );
+  }
+
+  _changeAgeRange() {
+    showDialog(
+      context: context,
+
+      builder: (BuildContext context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Container(
+          height: 150,
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: <Widget>[
+            TextFormField(
+              maxLines: 1,
+              keyboardType: TextInputType.text,
+              autofocus: false,
+              decoration: new InputDecoration(
+                  hintText: '18 years old',
+                  icon: new Icon(
+                    Icons.map,
+                    color: Colors.grey,
+                  )),
+              onSaved: (value) => _minAge = value.trim(),
+            ),
+            TextFormField(
+              maxLines: 1,
+              keyboardType: TextInputType.text,
+              autofocus: false,
+              decoration: new InputDecoration(
+                  hintText: '30 years old',
+                  icon: new Icon(
+                    Icons.map,
+                    color: Colors.grey,
+                  )),
+              onSaved: (value) => _maxAge = value.trim(),
+            ),
+          ],
+        ),
+        ),
+      ),
     );
   }
 }
