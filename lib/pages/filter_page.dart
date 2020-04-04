@@ -19,35 +19,114 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
   String _errorMessage;
+  bool _isRandomSelected;
+  bool _isDiscussion;
+  bool _isEntertainement;
+  bool _isLanguageTraining;
+  bool _isCultural;
+  bool _isParty;
 
   @override
   void initState() {
-    super.initState();
+    _isRandomSelected = true;
+    _isDiscussion = false;
+    _isEntertainement = false;
+    _isLanguageTraining = false;
+    _isCultural = false;
+    _isParty = false;
     _errorMessage = "";
+    super.initState();
   }
-  /*
-      return new Scaffold(
-        appBar: MyAppBar().setAppBar(context, "Sw'app"),
-        body: Stack(
-          children: <Widget>[
-            _showForm(),
-            _showCircularProgress(),
-            getOverlayWidget()
-          ],
-        ));
-   */
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar().setAppBar(context, "Sw'app"),
+      appBar: MyAppBar().setAppBar(context, "Sw'app",
+      loginCallBack: widget.logoutCallback),
       body: ListView(
         padding: const EdgeInsets.all(10),
         children: <Widget>[
           Container(height: 20),
           _showTitle(),
           Container(height: 20),
-          _showMeetingTypes(),
+          Text(
+            'Type of meeting',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(height: 20),
+          FilterChip(
+            selectedColor: Colors.blue,
+            selected: _isRandomSelected,
+            label: Text('Random',
+                style: TextStyle(
+                fontSize: 20
+            ),
+          ),
+            onSelected: (bool value) {
+              setState(() {
+                _isRandomSelected = !_isRandomSelected;
+              });
+            },
+          ),
+          new CheckboxListTile(
+            title: Text("Discussion"),
+            value: _isDiscussion,
+            onChanged: (bool value) {
+              setState(() {
+                _isDiscussion = !_isDiscussion;
+              });
+            },
+          ),
+          new CheckboxListTile(
+            title: Text("Entertainement"),
+            value: _isEntertainement,
+            onChanged: (bool value) {
+              setState(() {
+                _isEntertainement = !_isEntertainement;
+              });
+            },
+          ),
+          new CheckboxListTile(
+            title: Text("Cultural"),
+            value: _isCultural,
+            onChanged: (bool value) {
+              setState(() {
+                _isCultural = !_isCultural;
+              });
+            },
+          ),
+          new CheckboxListTile(
+            title: Text("Party"),
+            value: _isParty,
+            onChanged: (bool value) {
+              setState(() {
+                _isParty = !_isParty;
+              });
+            },
+          ),
+          new CheckboxListTile(
+            title: Text("Language training",),
+            value: _isLanguageTraining,
+            onChanged: (bool value) {
+              setState(() {
+                _isLanguageTraining = !_isLanguageTraining;
+              });
+            },
+          ),
+          Text(
+            'Filter',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(height: 10),
+          _filterRow('Area','20 km'),
+          Container(height: 10),
+          _filterRow('Age','25 ans'),
           showPrimaryButton(),
           showErrorMessage(),
         ],
@@ -99,29 +178,9 @@ class _FilterPageState extends State<FilterPage> {
                 CallPage(appId: APP_ID, channelName: "onlyOneChannel")));
   }
 
-
   Future<void> _handleCameraAndMic() async {
     await PermissionHandler().requestPermissions(
       [PermissionGroup.camera, PermissionGroup.microphone],
-    );
-  }
-
-  Widget _showMeetingTypes() {
-    return ListView(
-      children: <Widget>[
-        Text('Type of meeting',
-        style: TextStyle(
-        fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-        ),
-        Text('j\'aimeles pates',
-        style: TextStyle(
-        fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-        ),
-      ],
     );
   }
 
@@ -136,13 +195,52 @@ class _FilterPageState extends State<FilterPage> {
           fontStyle: FontStyle.italic,
         ),
         children: <TextSpan>[
-          TextSpan(text: 'people !',
-              style: TextStyle(fontWeight: FontWeight.bold)
-          ),
+          TextSpan(
+              text: 'people !', style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
     );
   }
+
+  Widget _filterRow(String s, String s2) {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: 100,
+          child: Text(s,
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ),
+        Container(
+          width: 100,
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(width: 1.0, color: Color(0xFFFFFFFFFF)),
+              left: BorderSide(width: 1.0, color: Color(0xFFFFFFFFFF)),
+              right: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+              bottom: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+            ),
+          ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 1.0, color: Color(0xFFFFDFDFDF)),
+                left: BorderSide(width: 1.0, color: Color(0xFFFFDFDFDF)),
+                right: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+                bottom: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+              ),
+            ),
+            child: Text(
+                s2,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Color(0xFF000000))
+            ),
+          ),
+        )
+      ],
+    );
+  }
 }
-
-

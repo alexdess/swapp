@@ -1,4 +1,5 @@
 import 'package:Swapp/services/authentification.dart';
+import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final _formKey = new GlobalKey<FormState>();
   String _telNumber;
   String _email;
   String _address;
@@ -39,8 +41,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   _setInfos2(DocumentSnapshot snapshot) {
     setState(() {
-      _name = snapshot['name']?? "";
-      _telNumber = snapshot['tel']?? "";
+      _name = snapshot['name'] ?? "";
+      _telNumber = snapshot['tel'] ?? "";
       _address = snapshot['adress'] ?? "";
       _email = snapshot['email'] ?? "";
       _postalCode = snapshot['postalCode'] ?? "";
@@ -51,19 +53,23 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(10),
-        children: <Widget>[
-          showNameInput(),
-          showEmailInput(),
-          showAdresseInput(),
-          showPostalCodeInput(),
-          showVillageInput(),
-          showTelInput(),
-          showPrimaryButton(),
-          showLogoutClickableText(),
-          showErrorMessage(),
-        ],
+      appBar: MyAppBar().setAppBar(context, "Sw'app"),
+      body: new Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: <Widget>[
+            showNameInput(),
+            showEmailInput(),
+            showAdresseInput(),
+            showPostalCodeInput(),
+            showVillageInput(),
+            showTelInput(),
+            showPrimaryButton(),
+            showLogoutClickableText(),
+            showErrorMessage(),
+          ],
+        ),
       ),
     );
   }
@@ -227,16 +233,58 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void validateAndSubmit() {}
+  bool validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void validateAndSubmit() async {
+    setState(() {
+      _errorMessage = "";
+    });
+    if (validateAndSave()) {
+      print('form is validate');
+      String userId = "";
+      try {
+        userId = widget.auth.getCurrentUserId();
+        widget.firestore
+            .collection(userId)
+            .document("Infos")
+            .setData(<String, dynamic>{
+          'adress': _address,
+          'tel': _telNumber,
+          'name': _name,
+          'email': _email,
+          'postalCode': _postalCode,
+          'village': _village,
+          'dateEnregistrement': FieldValue.serverTimestamp(),
+        });
+        Navigator.pop(context);
+      } catch (e) {
+        print('Error: $e');
+        setState(() {
+          _errorMessage = e.message;
+          _formKey.currentState.reset();
+        });
+      }
+    }
+  }
 
   showLogoutClickableText() {
     return new FlatButton(
         child: new Text('Se déconnecter',
-            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300,color: Colors.red)),
+            style: new TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w300,
+                color: Colors.red)),
         onPressed: _disconnectUser);
   }
 
   void _disconnectUser() {
-widget.logoutCallback();
+    widget.logoutCallback();
   }
 }
