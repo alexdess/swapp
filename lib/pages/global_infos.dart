@@ -1,10 +1,11 @@
 import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:flutter/material.dart';
+
 class InfosGeneral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar().setAppBar(context, "Sw'app",withInfo: false),
+      appBar: MyAppBar().setAppBar(context, "Sw'app", withInfo: false),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) =>
             EntryItem(data[index]),
@@ -13,52 +14,52 @@ class InfosGeneral extends StatelessWidget {
     );
   }
 }
+
 class Entry {
   Entry(this.title, [this.children = const <Entry>[]]);
 
   final String title;
   final List<Entry> children;
 }
+
 final List<Entry> data = <Entry>[
   Entry(
-    'Fonctionnement',
+    'How it works ?',
     <Entry>[
       Entry(
-        'Section A0',
-        <Entry>[
-          Entry('Item A0.1'),
-          Entry('Item A0.2'),
-          Entry('Item A0.3'),
-        ],
+        "Swapp is a cross-platform application that uses your computer or phone camera and connects you to other participants via video conference.\nSign up by simply adding your email address\nStart chatting with other participants: talk to someone that share a common interest, ask for recommendation (film, movie, book, …), practice a new language, show your talents or just have a drink. Possibilities are endless.\nDon’t worry, we will help you break the ice with thematic questions, and you will be able to change your correspondent at any time.\nIt's totally free, easy to use, and you will experience amazing encounters, don't hesitate any longer, go for it!",
       ),
-      Entry('Section A1'),
-      Entry('Section A2'),
     ],
   ),
   Entry(
-    'Précaution',
+    'Who are we?',
     <Entry>[
-      Entry('Section B0'),
-      Entry('Section B1'),
+      Entry(
+          " We are a team of 5 friends from the same village. Graduates and students with different backgrounds, we decided to develop a solution to create social interaction during the confinement. Our goal is to entertain people suffering from boredom and loneliness while being isolated at home."),
     ],
   ),
   Entry(
-    'Qui sommes nous ?',
+    'FAQ',
     <Entry>[
-      Entry('Section C0'),
-      Entry('Section C1'),
       Entry(
-        'Section C2',
+        'Can I choose my correspondent?',
         <Entry>[
-          Entry('Item C2.0'),
-          Entry('Item C2.1'),
-          Entry('Item C2.2'),
-          Entry('Item C2.3'),
+          Entry(
+              "Swapp connects you according to the criteria you selected. You can to another correspondent by clicking the switch button.")
         ],
       ),
+      Entry("Is it safe for children to use?", <Entry>[
+        Entry(
+            "Explicit content is totally prohibited on Swapp. You can report any user that don’t follow our rules. However, the age limit of Swapp is 16 and therefore the app should not be used by children.")
+      ]),
+      Entry("How do I contact a Swapp representative?", <Entry>[
+        Entry(
+            "You can reach us by sending an email to our mail box Swapp1772@gmail.com. Every question will be answered as soon as possible.")
+      ]),
     ],
   ),
 ];
+
 class EntryItem extends StatelessWidget {
   const EntryItem(this.entry);
 

@@ -158,7 +158,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         color: Colors.white.withOpacity(1),
         child: new ListView(
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 10),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -174,23 +174,23 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                     SizedBox(width: 50),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Row(
                   children: <Widget>[
                     SizedBox(width: 50),
                     Expanded(
-                      child: Text('Créer des requêtes tel que l\'achat de course, support et tout genre, etc. Les autres utilisateurs répondrons à vos demandes dans les plus brefs délais'),
+                      child: Text('Discuter en live avec des personnes ayant les mêmes centres d\'intérêts que vous ou qui veulent simplement recontrer de nouvelles personnes'),
                     ),
                     Expanded(
                       child: CircleAvatar(
                         backgroundColor: Colors.transparent,
                         radius: 48.0,
-                        child: Image.asset('assets/icon-shopping.png'),
+                        child: Image.asset('assets/icon-cam.png'),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -206,7 +206,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                     SizedBox(width: 50),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Row(
                   children: <Widget>[
                     SizedBox(width: 50),
@@ -222,7 +222,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -238,7 +238,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                     SizedBox(width: 50),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 new SizedBox(
                   width: 200.0,
                   height: 100.0,
