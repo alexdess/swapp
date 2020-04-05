@@ -26,7 +26,6 @@ class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
 
-
   @override
   void initState() {
     super.initState();
@@ -102,10 +101,8 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        child: FilterPage(firestore,logoutCallback),
-        ),
+        child: FilterPage(firestore, logoutCallback),
+      ),
     );
   }
-
 }
-

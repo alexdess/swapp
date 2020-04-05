@@ -1,4 +1,3 @@
-import 'package:Swapp/pages/root_page.dart';
 import 'package:Swapp/services/authentification.dart';
 import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,7 +24,6 @@ class _ProfilePageState extends State<ProfilePage> {
   String _postalCode;
 
   bool _isEmailVerified;
-
 
   @override
   void initState() {
@@ -58,7 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar().setAppBar(context, "Sw'app"),
+      appBar: MyAppBar().setAppBar(context, "Swapp"),
       body: new Form(
         key: _formKey,
         child: ListView(
@@ -273,29 +271,29 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _showEmailValidation() {
-    if(_isEmailVerified){
-      return Container(width: 0,height: 0);
-    }
-    else{
+    if (_isEmailVerified) {
+      return Container(width: 0, height: 0);
+    } else {
       return RichText(
-
         text: TextSpan(
-          text: 'Your email is currenctly not verified, please check your emails.',
+          text:
+              'Your email is currenctly not verified, please check your emails.',
           style: TextStyle(
             color: Colors.red,
             fontWeight: FontWeight.bold,
           ),
-            children: <TextSpan>[
-        new TextSpan(
-            text: ' Send a new verification email.',
-            style: TextStyle(
-              decoration: TextDecoration.underline,
+          children: <TextSpan>[
+            new TextSpan(
+              text: ' Send a new verification email.',
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+              ),
+              recognizer: new TapGestureRecognizer()
+                ..onTap = () => _sendVerificationEmail(),
             ),
-            recognizer: new TapGestureRecognizer()..onTap = () => _sendVerificationEmail(),
+          ],
         ),
-        ],
-    ),
-        );
+      );
     }
   }
 

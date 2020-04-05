@@ -1,11 +1,10 @@
-
 import 'package:Swapp/services/authentification.dart';
 import 'package:Swapp/widget/ReusableAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LoginSignupPage extends StatefulWidget {
-  LoginSignupPage({this.auth, this.loginCallback,this.firestore});
+  LoginSignupPage({this.auth, this.loginCallback, this.firestore});
 
   final BaseAuth auth;
   final VoidCallback loginCallback;
@@ -34,7 +33,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   bool _isLoginForm;
   bool _isLoading;
-  bool _isOverlayVisible=true;
+  bool _isOverlayVisible = true;
 
   @override
   void initState() {
@@ -49,7 +48,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     _width = MediaQuery.of(context).size.width;
     _height = MediaQuery.of(context).size.height;
     return new Scaffold(
-        appBar: MyAppBar().setAppBar(context, "Sw'app"),
+        appBar: MyAppBar().setAppBar(context, "Swapp"),
         body: Stack(
           children: <Widget>[
             _showForm(),
@@ -82,21 +81,22 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
           print('Signed in: $userId');
-        }
-        else {
+        } else {
           userId = await widget.auth.signUp(_email, _password);
           widget.auth.sendEmailVerification();
-          if(userId != null && userId.isNotEmpty){
-
-          firestore.collection(userId).document("Infos").setData(<String, dynamic>{
-            'tel': _telNumber,
-            'name': _name,
-            'email': _email,
-            'postalCode': _postalCode,
-            'village': _village,
-            'dateEnregistrement' : FieldValue.serverTimestamp(),
-          });
-          print('Signed up user: $userId');
+          if (userId != null && userId.isNotEmpty) {
+            firestore
+                .collection(userId)
+                .document("Infos")
+                .setData(<String, dynamic>{
+              'tel': _telNumber,
+              'name': _name,
+              'email': _email,
+              'postalCode': _postalCode,
+              'village': _village,
+              'dateEnregistrement': FieldValue.serverTimestamp(),
+            });
+            print('Signed up user: $userId');
           }
         }
         setState(() {
@@ -104,7 +104,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         });
 
         if (userId != null && userId.length > 0) {
-
           widget.loginCallback();
         }
       } catch (e) {
@@ -115,8 +114,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           _formKey.currentState.reset();
         });
       }
-    }
-    else{
+    } else {
       setState(() {
         _isLoading = false;
       });
@@ -156,104 +154,107 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         height: _height,
         width: _width,
         color: Colors.white.withOpacity(1),
-        child: new ListView(
-              children: [
-                SizedBox(height: 10),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 48.0,
-                          child: Image.asset('assets/icon-together.png'),
-                        ),
-                    ),
-                    Expanded(
-                      child: Text('Swa\'App est une application solidaire qui met en relation des personnes voulant faire de nouvelles rencontres selons des critères.'),
-                    ),
-                    SizedBox(width: 50),
-                  ],
+        child: new ListView(children: [
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('assets/icon-together.png'),
                 ),
-                SizedBox(height: 30),
-                Row(
-                  children: <Widget>[
-                    SizedBox(width: 50),
-                    Expanded(
-                      child: Text('Discuter en live avec des personnes ayant les mêmes centres d\'intérêts que vous ou qui veulent simplement recontrer de nouvelles personnes'),
-                    ),
-                    Expanded(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 48.0,
-                        child: Image.asset('assets/icon-cam.png'),
-                      ),
-                    ),
-                  ],
+              ),
+              Expanded(
+                child: Text(
+                    'SwaApp est une application solidaire qui met en relation des personnes voulant faire de nouvelles rencontres selons des critères.'),
+              ),
+              SizedBox(width: 50),
+            ],
+          ),
+          SizedBox(height: 30),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 50),
+              Expanded(
+                child: Text(
+                    'Discuter en live avec des personnes ayant les mêmes centres d\'intérêts que vous ou qui veulent simplement recontrer de nouvelles personnes'),
+              ),
+              Expanded(
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('assets/icon-cam.png'),
                 ),
-                SizedBox(height: 30),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 48.0,
-                        child: Image.asset('assets/icon-localisation.png'),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text('Les videos "match" sont gérées selon la géolocalisation des utilisateurs.'),
-                    ),
-                    SizedBox(width: 50),
-                  ],
+              ),
+            ],
+          ),
+          SizedBox(height: 30),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('assets/icon-localisation.png'),
                 ),
-                SizedBox(height: 30),
-                Row(
-                  children: <Widget>[
-                    SizedBox(width: 50),
-                    Expanded(
-                      child: Text('Swa\'pp est une application solidaire qui met en relation les gens qui s\'ennuient.'),
-                    ),
-                    Expanded(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 48.0,
-                        child: Image.asset('assets/icon-monney.png'),
-                      ),
-                    ),
-                  ],
+              ),
+              Expanded(
+                child: Text(
+                    'Les videos "match" sont gérées selon la géolocalisation des utilisateurs.'),
+              ),
+              SizedBox(width: 50),
+            ],
+          ),
+          SizedBox(height: 30),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 50),
+              Expanded(
+                child: Text(
+                    'Swapp est une application solidaire qui met en relation les gens qui s\'ennuient.'),
+              ),
+              Expanded(
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('assets/icon-monney.png'),
                 ),
-                SizedBox(height: 30),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 48.0,
-                        child: Image.asset('assets/icon-virus.png'),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text('Il n\'y a aucun contact réel entre les utilisateurs. Chaque utilisateur est responsable de respecter les précautions du conseil fédéral. '),
-                    ),
-                    SizedBox(width: 50),
-                  ],
+              ),
+            ],
+          ),
+          SizedBox(height: 30),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('assets/icon-virus.png'),
                 ),
-                SizedBox(height: 30),
-                new SizedBox(
-                  width: 200.0,
-                  height: 100.0,
-                  child: new RaisedButton(
-                    onPressed: (){setState(() {
-                      _isOverlayVisible = false;
-                    });},
-                    child: const Text(
-                        'J\'ai compris',
-                        style: TextStyle(fontSize: 20)
-                    ),
-                  ),
-                  ),
-              ]
-        ),
+              ),
+              Expanded(
+                child: Text(
+                    'Il n\'y a aucun contact réel entre les utilisateurs. Chaque utilisateur est responsable de respecter les précautions du conseil fédéral. '),
+              ),
+              SizedBox(width: 50),
+            ],
+          ),
+          SizedBox(height: 30),
+          new SizedBox(
+            width: 200.0,
+            height: 100.0,
+            child: new RaisedButton(
+              onPressed: () {
+                setState(() {
+                  _isOverlayVisible = false;
+                });
+              },
+              child:
+                  const Text('J\'ai compris', style: TextStyle(fontSize: 20)),
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -295,7 +296,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             ],
           ),
         ));
-    if(_isLoginForm){
+    if (_isLoginForm) {
       return signInContainer;
     }
     return signupContainer;
@@ -364,11 +365,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.person,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'le nom ne peux pas être vite' : null,
+        validator: (value) =>
+            value.isEmpty ? 'le nom ne peux pas être vite' : null,
         onSaved: (value) => _name = value.trim(),
       ),
     );
   }
+
   Widget showVillageInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
@@ -382,11 +385,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.home,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'la ville ne peux pas être vite' : null,
+        validator: (value) =>
+            value.isEmpty ? 'la ville ne peux pas être vite' : null,
         onSaved: (value) => _village = value.trim(),
       ),
     );
   }
+
   Widget showPostalCodeInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
@@ -400,11 +405,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.account_balance,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty || value.length > 4 ? 'code postal incorrect (exemple: 1782)' : null,
+        validator: (value) => value.isEmpty || value.length > 4
+            ? 'code postal incorrect (exemple: 1782)'
+            : null,
         onSaved: (value) => _postalCode = value.trim(),
       ),
     );
   }
+
   Widget showTelInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
@@ -418,7 +426,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.phone,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'le numéro ne peux pas être vite' : null,
+        validator: (value) =>
+            value.isEmpty ? 'le numéro ne peux pas être vite' : null,
         onSaved: (value) => _telNumber = value.trim(),
       ),
     );

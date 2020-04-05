@@ -5,7 +5,7 @@ class InfosGeneral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar().setAppBar(context, "Sw'app", withInfo: false),
+      appBar: MyAppBar().setAppBar(context, "Swapp", withInfo: false),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) =>
             EntryItem(data[index]),

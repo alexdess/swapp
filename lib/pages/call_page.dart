@@ -72,10 +72,10 @@ class _CallPageState extends State<CallPage> {
     };
 
     AgoraRtcEngine.onJoinChannelSuccess = (
-        String channel,
-        int uid,
-        int elapsed,
-        ) {
+      String channel,
+      int uid,
+      int elapsed,
+    ) {
       setState(() {
         final info = 'onJoinChannel: $channel, uid: $uid';
         _infoStrings.add(info);
@@ -106,11 +106,11 @@ class _CallPageState extends State<CallPage> {
     };
 
     AgoraRtcEngine.onFirstRemoteVideoFrame = (
-        int uid,
-        int width,
-        int height,
-        int elapsed,
-        ) {
+      int uid,
+      int width,
+      int height,
+      int elapsed,
+    ) {
       setState(() {
         final info = 'firstRemoteVideo: $uid ${width}x $height';
         _infoStrings.add(info);
@@ -149,32 +149,32 @@ class _CallPageState extends State<CallPage> {
       case 1:
         return Container(
             child: Column(
-              children: <Widget>[_videoView(views[0])],
-            ));
+          children: <Widget>[_videoView(views[0])],
+        ));
       case 2:
         return Container(
             child: Column(
-              children: <Widget>[
-                _expandedVideoRow([views[1]]),
-                _expandedVideoRow([views[0]]),
-              ],
-            ));
+          children: <Widget>[
+            _expandedVideoRow([views[1]]),
+            _expandedVideoRow([views[0]]),
+          ],
+        ));
       case 3:
         return Container(
             child: Column(
-              children: <Widget>[
-                _expandedVideoRow(views.sublist(0, 2)),
-                _expandedVideoRow(views.sublist(2, 3))
-              ],
-            ));
+          children: <Widget>[
+            _expandedVideoRow(views.sublist(0, 2)),
+            _expandedVideoRow(views.sublist(2, 3))
+          ],
+        ));
       case 4:
         return Container(
             child: Column(
-              children: <Widget>[
-                _expandedVideoRow(views.sublist(0, 2)),
-                _expandedVideoRow(views.sublist(2, 4))
-              ],
-            ));
+          children: <Widget>[
+            _expandedVideoRow(views.sublist(0, 2)),
+            _expandedVideoRow(views.sublist(2, 4))
+          ],
+        ));
       default:
     }
     return Container();
@@ -207,7 +207,6 @@ class _CallPageState extends State<CallPage> {
               color: Colors.white,
               size: 35.0,
             ),
-
             shape: CircleBorder(),
             elevation: 2.0,
             fillColor: Colors.redAccent,
@@ -225,7 +224,6 @@ class _CallPageState extends State<CallPage> {
             fillColor: Colors.white,
             padding: const EdgeInsets.all(12.0),
           ),
-
           RawMaterialButton(
             onPressed: _onSwitchCamera,
             child: Icon(

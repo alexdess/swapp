@@ -7,17 +7,14 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: 'Swa\'App',
+        title: 'SwaApp',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.teal[400],
           accentColor: Colors.lightBlue[700],
-
           fontFamily: 'Robotto',
           textTheme: TextTheme(
             headline: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),

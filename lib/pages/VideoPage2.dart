@@ -41,16 +41,16 @@ class IndexState extends State<VideoPage> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
-                        controller: _channelController,
-                        decoration: InputDecoration(
-                          errorText:
+                    controller: _channelController,
+                    decoration: InputDecoration(
+                      errorText:
                           _validateError ? 'Channel name is mandatory' : null,
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(width: 1),
-                          ),
-                          hintText: 'Channel name',
-                        ),
-                      ))
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(width: 1),
+                      ),
+                      hintText: 'Channel name',
+                    ),
+                  ))
                 ],
               ),
               Padding(
@@ -91,7 +91,7 @@ class IndexState extends State<VideoPage> {
         MaterialPageRoute(
           builder: (context) => CallPage(
             channelName: _channelController.text,
-            appId:APP_ID,
+            appId: APP_ID,
           ),
         ),
       );

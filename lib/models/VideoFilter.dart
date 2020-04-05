@@ -10,20 +10,25 @@ class VideoFilter {
   bool isLanguage;
   String timestamp;
 
-  VideoFilter(this.id, this.requestorId, this.isDiscussion,this.isEntertainment,
-      this.isCultural,this.isParty,this.isLanguage,this.timestamp);
+  VideoFilter(
+      this.id,
+      this.requestorId,
+      this.isDiscussion,
+      this.isEntertainment,
+      this.isCultural,
+      this.isParty,
+      this.isLanguage,
+      this.timestamp);
 
   VideoFilter.fromMap(Map snapshot, String id)
-      :
-        id = id ?? '',
+      : id = id ?? '',
         requestorId = snapshot["requestorId"] ?? '',
         timestamp = snapshot["timestamp"]?.toString() ?? '',
-        isDiscussion= snapshot["isDiscussion"] ?? true,
-        isEntertainment= snapshot["isEntertainment"] ?? true,
-        isCultural= snapshot["isCultural"] ?? true,
-        isParty= snapshot["isParty"] ?? true,
-        isLanguage= snapshot["isLanguage"] ?? true;
-
+        isDiscussion = snapshot["isDiscussion"] ?? true,
+        isEntertainment = snapshot["isEntertainment"] ?? true,
+        isCultural = snapshot["isCultural"] ?? true,
+        isParty = snapshot["isParty"] ?? true,
+        isLanguage = snapshot["isLanguage"] ?? true;
 
   Map<String, dynamic> toJson() {
     return {

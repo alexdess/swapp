@@ -41,8 +41,8 @@ class Auth implements BaseAuth {
     _user = user;
     return _user;
   }
-  String getCurrentUserId(){
 
+  String getCurrentUserId() {
     return _user?.uid;
   }
 

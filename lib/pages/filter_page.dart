@@ -47,7 +47,7 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar()
-          .setAppBar(context, "Sw'app", loginCallBack: widget.logoutCallback),
+          .setAppBar(context, "Swapp", loginCallBack: widget.logoutCallback),
       body: ListView(
         padding: const EdgeInsets.all(10),
         children: <Widget>[
@@ -190,10 +190,10 @@ class _FilterPageState extends State<FilterPage> {
     // search on all searching list... if nothing => add entry....
     await _handleCameraAndMic();
     VideoFilter filter;
-    if(_isRandomSelected){
-      filter = new VideoFilter('',widget.auth.getCurrentUserId(),true,true,true,true,true,'');
-    }
-    else {
+    if (_isRandomSelected) {
+      filter = new VideoFilter(
+          '', widget.auth.getCurrentUserId(), true, true, true, true, true, '');
+    } else {
       filter = new VideoFilter(
           '',
           widget.auth.getCurrentUserId(),
