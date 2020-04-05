@@ -19,7 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
   final _formKey = new GlobalKey<FormState>();
   String _telNumber;
   String _email;
-  String _address;
   String _name;
   String _errorMessage;
   String _village;
@@ -50,7 +49,6 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _name = snapshot['name'] ?? "";
       _telNumber = snapshot['tel'] ?? "";
-      _address = snapshot['adress'] ?? "";
       _email = snapshot['email'] ?? "";
       _postalCode = snapshot['postalCode'] ?? "";
       _village = snapshot['village'] ?? "";
@@ -69,7 +67,6 @@ class _ProfilePageState extends State<ProfilePage> {
             _showEmailValidation(),
             showNameInput(),
             showEmailInput(),
-            showAdresseInput(),
             showPostalCodeInput(),
             showVillageInput(),
             showTelInput(),
@@ -131,27 +128,6 @@ class _ProfilePageState extends State<ProfilePage> {
             )),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
         onSaved: (value) => _email = value.trim(),
-      ),
-    );
-  }
-
-  Widget showAdresseInput() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
-      child: new TextFormField(
-        controller: new TextEditingController(text: _address),
-        maxLines: 1,
-        keyboardType: TextInputType.text,
-        autofocus: false,
-        decoration: new InputDecoration(
-            hintText: 'Adresse',
-            icon: new Icon(
-              Icons.account_balance,
-              color: Colors.grey,
-            )),
-        validator: (value) =>
-            value.isEmpty ? 'adresse ne peux pas être vite' : null,
-        onSaved: (value) => _address = value.trim(),
       ),
     );
   }
@@ -263,7 +239,6 @@ class _ProfilePageState extends State<ProfilePage> {
             .collection(userId)
             .document("Infos")
             .setData(<String, dynamic>{
-          'adress': _address,
           'tel': _telNumber,
           'name': _name,
           'email': _email,

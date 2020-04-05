@@ -28,7 +28,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   String _email;
   String _password;
   String _errorMessage;
-  String _address;
   String _postalCode;
   String _village;
   String _telNumber;
@@ -90,7 +89,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           if(userId != null && userId.isNotEmpty){
 
           firestore.collection(userId).document("Infos").setData(<String, dynamic>{
-            'adress': _address,
             'tel': _telNumber,
             'name': _name,
             'email': _email,
@@ -271,7 +269,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               showLogo(),
               showNameInput(),
               showEmailInput(),
-              showAdresseInput(),
               showPostalCodeInput(),
               showVillageInput(),
               showTelInput(),
@@ -354,24 +351,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Widget showAdresseInput() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
-      child: new TextFormField(
-        maxLines: 1,
-        keyboardType: TextInputType.text,
-        autofocus: false,
-        decoration: new InputDecoration(
-            hintText: 'Adresse',
-            icon: new Icon(
-              Icons.account_balance,
-              color: Colors.grey,
-            )),
-        validator: (value) => value.isEmpty ? 'adresse ne peux pas être vite' : null,
-        onSaved: (value) => _address = value.trim(),
-      ),
-    );
-  }  Widget showNameInput() {
+  Widget showNameInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
@@ -449,6 +429,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
+        keyboardType: TextInputType.text,
         obscureText: true,
         autofocus: false,
         decoration: new InputDecoration(

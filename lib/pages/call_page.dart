@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Swapp/services/get_video_channel_service.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 
@@ -154,8 +155,8 @@ class _CallPageState extends State<CallPage> {
         return Container(
             child: Column(
               children: <Widget>[
+                _expandedVideoRow([views[1]]),
                 _expandedVideoRow([views[0]]),
-                _expandedVideoRow([views[1]])
               ],
             ));
       case 3:
@@ -293,6 +294,7 @@ class _CallPageState extends State<CallPage> {
   }
 
   void _onCallEnd(BuildContext context) {
+    GetVideoChannelService.ClearId();
     Navigator.pop(context);
   }
 
@@ -318,7 +320,7 @@ class _CallPageState extends State<CallPage> {
         child: Stack(
           children: <Widget>[
             _viewRows(),
-            _panel(),
+            //_panel(),
             _toolbar(),
           ],
         ),

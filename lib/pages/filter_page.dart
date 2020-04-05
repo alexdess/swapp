@@ -33,7 +33,6 @@ class _FilterPageState extends State<FilterPage> {
 
   @override
   void initState() {
-    GetVideoChannelService.ClearId(widget.auth.getCurrentUserId());
     _isRandomSelected = true;
     _isDiscussion = false;
     _isEntertainement = false;
